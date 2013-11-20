@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>HTML5 Form</title>
+        <meta name="description" content=""/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+	
+        <link rel="shortcut icon" href="/favicon.ico"/>
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+
+        <link rel="stylesheet" href="css/normalize.css"/>
+        <link rel="stylesheet" href="css/main.css"/>
+        <script type="application/javascript" src="js/vendor/modernizr-2.6.2.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+       <!--Form as per the requirement-->
+       <div id="wrapper">
+         <form id="detailsForm" method="get" action="">
+                <label for="firstname">First name: <span class="required">*</span></label>
+                <input type="text" id="first_name" name="first_name" value="" required  />
+                <br/><br/>
+                <label for="surname">Surname: <span class="required">*</span></label>
+                <input type="text" id="surname" name="surname" value="" required />
+                 <br/><br/>
+                <label for="email">Email address: <span class="required">*</span> </label>
+                <input type="email" id="email" name="email" value="" required />
+                 <br/><br/>
+                <label for="daytime_cntct">Daytime contact number: <span class="required">*</span> </label>
+                <input type="tel" id="daytime_contact" name="daytime_contact" value="" required />
+                <br/><br/>
+                <label for="address">Address: <span class="required">*</span> </label>
+                <input type="text" id="address" name="address" value=""  required/>
+                <br/><br/>
+                <label for="suburb">Suburb: <span class="required">*</span> </label>
+                <input type="text" id="suburb" name="suburb" value="" required />
+                 <br/><br/>
+                <label for="state">State: <span class="required">*</span> </label>
+                <select id="state" name="state" required>
+                    <option>Choose</option>
+                    <option value="ACT">ACT</option>
+                    <option value="NSW">NSW</option>
+                    <option value="NT">NT</option>
+                    <option value="QLD">QLD</option>
+                    <option value="SA">SA</option>
+                    <option value="TAS">TAS</option>
+                    <option value="VIC">VIC</option>
+                    <option value="WA">WA</option>
+                </select>
+                <br/><br/>
+                <label for="postcode">Postcode: <span class="required">*</span> </label>
+                <input type="text" id="postcode" name="postcode" value="" required/>
+                 <br/><br/>
+                <label for="enquiry_type">Enquiry Type: <span class="required">*</span> </label>
+                <select id="enquiry_type" name="enquiry_type" required>
+                    <option>Choose</option>
+                    <option value="GE">General enquiry</option>
+                    <option value="PFE">Product feedback or enquiry</option>
+                    <option value="PC">Product complaint</option>
+                </select>
+                <br/><br/>
+                 <p class="error"></p>
+                <label for="prodname">Product Name: <span class="required">*</span> </label>
+                <input type="text" id="prodname" name="prodname" value=""  />
+                <br/><br/>
+                <label for="prodsize">Product Size: <span class="required">*</span> </label>
+                <input type="text" id="prodsize" name="prodsize" value=""  />
+                <br/><br/>
+                <label for="usebydate">Use By Date: <span class="required">*</span> </label>
+                <input type="text" id="usebydate" name="usebydate" value=""  />
+                <br/><br/>
+                <label for="batchcode">Batch Code: <span class="required">*</span> </label>
+                <input type="text" id="batchcode" name="batchcode" value=""  />
+                <br/><br/>
+                <label for="enquiry">Enquiry: <span class="required">*</span></label>
+                <textarea id="enquiry" name="enquiry" placeholder="Your message must be greater than 20 charcters" required data-minlength="20"></textarea>
+                <br/><br/>
+                <span id="loading"></span>
+                <input type="submit" value="Submit" id="submit-button" />
+                <p id="req-field-desc"><span class="required">*</span> indicates a required field</p>
+            </form>
+       </div>
+        <!--Custom Script-->
+        <script type="application/javascript">
+		var enquiry_Type = document.getElementById('enquiry_type');
+		var product_Name = document.getElementById('prodname').value;
+		var product_Size = document.getElementById('prodsize').value;
+		var use_Bydate   = document.getElementById('usebydate').value;
+		var Batch_Code   = document.getElementById('batchcode').value;
+		
+		var checkConstraints = function() {
+			if (enquiry_Type.value == 'PC') { 
+				if((product_Name == '')|| (product_Size == '')|| (use_Bydate == '')|| (Batch_Code== ''))
+				{
+					enquiry_Type.setCustomValidity('As you chose Product Complaint, please enter valid values for Product Name, Product Size, Use By Date and Batch Code.');
+					showErrorMessage();
+					return false;
+				}
+			} else {
+				enquiry_Type.setCustomValidity('');
+				return true;
+			}        
+		};
+			var showErrorMessage = function() {
+			form.getElementsByClassName('error')[0].innerHTML = enquiry_Type.validationMessage;
+		  };
+		 var form = document.getElementById('detailsForm');
+		 form.addEventListener('submit', function(e) {
+			if (checkConstraints() == false ) {
+              if (!this.checkValidity()) { 
+				e.preventDefault();
+				showErrorMessage();
+				document.getElementById('prodname').focus(); 
+				return false; 
+			}
+           }
+		   			
+    }, false);
+		</script>
+        <script type="application/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script type="application/javascript" >window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+        <script type="application/javascript" src="js/plugins.js"></script>
+        <script type="application/javascript" src="js/main.js"></script>
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script type="application/javascript">
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='//www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create','UA-XXXXX-X');ga('send','pageview');
+        </script>
+    </body>
+</html>
